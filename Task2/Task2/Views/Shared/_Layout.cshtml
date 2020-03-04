@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Task2</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $('#select-all').on('click', function () {
+            // находим все чекбоксы
+            var $checkboxes = $('.chkbox');
+
+            // устанавливаем им свойство checked, такое же, как и элемента #select-all
+            $checkboxes.prop('checked', $(this).prop('checked'));
+        });
+
+        var lastChecked = null;
+        $('.chkbox').on('click', function (e) {
+            var $selectAll = $('#select-all');
+
+            // находим все чексбоксы
+            var $checkboxes = $('.chkbox');
+
+            // если это первый выделенный чекбокс, сохраняем его как последий выделенный
+            if (!lastChecked) {
+                lastChecked = this;
+            }
+
+            // находим начало и конец интервала
+            var start = $checkboxes.index(this);
+            var end = $checkboxes.index(lastChecked);
+
+            // фильтруем все чекбоксы по интервалу выделения
+            $checkboxes.slice(
+                Math.min(start, end),
+                Math.max(start, end) + 1
+            )
+                // выделяем или снимаем выделение с интервала в зависимости
+                // от первого чекбокса в выделении
+                .prop('checked', lastChecked.checked);
+
+            // сохраняем последний выделенный чекбокс
+            lastChecked = this;
+
+            // находим все выделенные чексбоксы
+            var $allChecked = $checkboxes.filter(':checked');
+
+            // сравниваем количество всех и выбранных чекбоксов
+            // если равно - выделяем чекбокс #select-all
+            // если нет - снимаем выделение с чекбокса #select-all
+            $selectAll.prop('checked', $checkboxes.length === $allChecked.length);
+
+        });
+    </script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

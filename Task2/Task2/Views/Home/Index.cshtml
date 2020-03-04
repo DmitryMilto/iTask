@@ -1,0 +1,54 @@
+﻿@model List<User>
+@{
+    ViewData["Title"] = "Home";
+}
+    
+    <form method="post">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-secondary btn-group" asp-route-s1="Delete">Удалить выделенных</button>
+            <button type="submit" class="btn btn-secondary btn-group" asp-route-s1="Block">Заблокировать выделенных</button>
+            <button type="submit" class="btn btn-secondary btn-group" asp-route-s1="UnBlock">Разблокировать выделенных</button>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    <input type="checkbox" id="select-all" class="chkbox">
+                </th>
+                <th>Email</th>
+                <th>Login</th>
+                <th>Дата регистации</th>
+                <th>Дата последнего захода</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="@Model[i].Check" class="chkbox" />
+                    </td>
+                    <td><input type="hidden" asp-for="@Model[i].Email" />@Model[i].Email</td>
+                    <td><input type="hidden" asp-for="@Model[i].Login" />@Model[i].Login</td>
+                    <td><input type="hidden" asp-for="@Model[i].DateRegistration" />@Model[i].DateRegistration</td>
+                    <td><input type="hidden" asp-for="@Model[i].DataRelease" />@Model[i].DataRelease</td>
+                    @if (!Model[i].Block)
+                    {
+                        <td class="text-success">Разблокирован</td>
+                    }
+                    else
+                    {
+                        <td class="text-danger">Заблокирован</td>
+                    }
+                    @if (Model[i].Status)
+                    {
+                        <td class="text-success">&#149; online</td>
+                    }
+                    else
+                    {
+                        <td class="text-danger">offline</td>
+                    }
+                </tr>
+            }
+        </table>
+    </form>
+    

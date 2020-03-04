@@ -1,0 +1,33 @@
+﻿@model Task2.Models.ViewModels.RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="input-group mb-3">
+        <input asp-for="Login" type="text" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1">
+        <span asp-validation-for="Login"></span>
+    </div>
+
+    <div class="input-group mb-3">
+        <input asp-for="Email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div class="input-group mb-3">
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div class="input-group mb-3">
+        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="ConfirmPassword" aria-label="ConfirmPassword" aria-describedby="basic-addon1">
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    <div>
+        <input class="btn btn-primary" type="submit" value="Регистрация" />
+    </div>
+</form>

@@ -1,0 +1,26 @@
+﻿@model Task2.Models.ViewModels.LoginModel
+
+@{
+    ViewData["Title"] = "Выполнить вход";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Вход в приложение</h2>
+<form method="post" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="input-group mb-3">
+        <input asp-for="Login" type="text" class="form-control" placeholder="Имя пользователя" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+    </div>
+
+    <div>
+        <label asp-for="RememberMe"></label><br />
+        <input asp-for="RememberMe" />
+    </div>
+    <div>
+        <input class="btn btn-primary" type="submit" value="Войти" />
+    </div>
+</form>

@@ -6,6 +6,39 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .note {
+            background-color: moccasin;
+            height: 250px;
+            padding: 10px;
+            position: absolute;
+            width: 200px;
+            -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+            .note:hover .closebutton {
+                display: block;
+            }
+
+        .closebutton {
+            display: none;
+            background-image: url(https://webkit.org/demos/sticky-notes/deleteButton.png);
+            height: 30px;
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            width: 30px;
+        }
+
+            .closebutton:active {
+                background-image: url(https://webkit.org/demos/sticky-notes/deleteButton.png);
+            }
+
+        .edit {
+            outline: none;
+        }
+    </style>
+
 </head>
 <body>
     <header>
@@ -16,6 +49,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                 </div>
@@ -27,8 +61,14 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation" id="newNoteButton" onclick="newNote()">
+                <img src="https://s1.iconbird.com/ico/2013/10/464/w512h5121380984320add1.png" width="50" height="50" />
+            </button>
+        }
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>

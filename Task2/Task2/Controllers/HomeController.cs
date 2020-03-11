@@ -31,9 +31,15 @@ namespace Task2.Controllers
             {
                 await _signInManager.SignOutAsync();
                 user.Check = false;
+                user.Status = false;
                 IdentityResult result = await _userManager.UpdateAsync(user);
             }
+            if(user == null)
+            {
+                await _signInManager.SignOutAsync();
+            }
             var model = _userManager.Users.ToList();
+            
             return View(model);
         }
         [HttpPost]
@@ -66,6 +72,7 @@ namespace Task2.Controllers
                         if (user != null)
                         {
                             user.Block = true;
+                            user.Status = false;
                             result = await _userManager.UpdateAsync(user);
                             if (result.Succeeded)
                             {

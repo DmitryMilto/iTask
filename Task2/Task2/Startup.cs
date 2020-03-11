@@ -33,13 +33,6 @@ namespace Task2
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<UsersContext>();
 
-            //services.Configure<IdentityOptions>(options => 
-            //{
-            //    options.Password.RequiredUniqueChars = 3;
-            //    options.Password.RequireNonAlphanumeric = false;
-                
-            //});
-
             services.AddControllersWithViews();
         }
 

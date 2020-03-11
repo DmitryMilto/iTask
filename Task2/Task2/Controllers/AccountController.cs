@@ -69,30 +69,43 @@ namespace Task2.Controllers
             if (ModelState.IsValid)
             {
                 User user = await _userManager.FindByNameAsync(model.Login);
-                if (!user.Block)
+                if (user != null)
                 {
-                    var result =
-                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
-
-                    if (result.Succeeded)
+                    if (!user.Block)
                     {
-                        user.Status = true;
-                        IdentityResult result1 = await _userManager.UpdateAsync(user);
+                        var result =
+                        await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
 
-                        // проверяем, принадлежит ли URL приложению
-                        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                        if (result.Succeeded)
                         {
-                            return Redirect(model.ReturnUrl);
+                            user.Status = true;
+                            IdentityResult result1 = await _userManager.UpdateAsync(user);
+
+                            // проверяем, принадлежит ли URL приложению
+                            if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                            {
+                                return Redirect(model.ReturnUrl);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                        TempData["messageDelete"] = string.Format("Пользователь \"{0}\" был заблокирован",
+                    user.UserName);
                     }
+                }
+                else
+                {
+                    TempData["messageDelete"] = string.Format("Пользовател \"{0}\" был удален",
+                    model.Login);
                 }
             }
             return View(model);

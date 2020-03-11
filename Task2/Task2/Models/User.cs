@@ -8,7 +8,6 @@ namespace Task2.Models
 {
     public class User : IdentityUser
     {
-
         public string Login { get; set; }
         public DateTime DateRegistration { get; set; }
         public DateTime DataRelease { get; set; }
